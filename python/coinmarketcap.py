@@ -6,15 +6,18 @@ import pandas as pd
 import io
 import sys
 import pandas as pd
+import time
+import re
 
 inputArguments=list(map(str, sys.argv[1].strip('[]').split(';')))
 
 firstCur=inputArguments[0]
 lastCur=inputArguments[1]
-outputFileName=inputArguments[2]
+#outputFileName=inputArguments[2]
 
 #
 url = 'https://api.coinmarketcap.com/v1/ticker/?start=%s&limit=%s' % (firstCur,lastCur)
+
 #łacze się do API i pobieram dane
 urlData = requests.get(url).content
 
@@ -22,4 +25,4 @@ urlData = requests.get(url).content
 rawData = pd.read_json(io.StringIO(urlData.decode('utf-8')))
 
 # zapis pliku do csvki
-rawData.to_csv(outputFileName)
+rawData.to_csv(re.search('api.(.*).com',url).group(1) + "_" + str(firstCur) + "_" + str(lastCur)+ "_" + str.replace(time.ctime()," ","_") + ".csv")

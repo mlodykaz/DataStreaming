@@ -19,6 +19,6 @@ source $cmcHome/$configurationFileName $firstCur $lastCur $processesList
 if [ $processesList == 'a' ] || echo "$processesList" | grep -q "c"; then
     echo 'coinmarketcap'
         python3 \
-        $cmcHome/python/coinmarektcap.py \
-        "[$firstCur;$lastCur;$outputFileName]"
+        $cmcHome/python/coinmarketcap.py \
+        "[$firstCur;$lastCur]"
 fi
